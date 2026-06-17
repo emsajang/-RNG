@@ -30,6 +30,7 @@ typrint('슬롯머신에 오신 것을 환영합니다.')
 typrint('[1코인 = 1000원] 입니다.')
 typrint('잭팟 - 5배')
 typrint('2개 - 1.5배')
+typrint('1개 - 0배')
 
 while True:
     while True:
