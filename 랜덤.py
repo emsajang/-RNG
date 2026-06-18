@@ -1,15 +1,18 @@
-# 라이브러리에서 불러오기
+# 라이브러리
 import random
 import time
 
-# 변수 정의
-nomoney = ['돈이 없음 썩 꺼지거라.','분명 말했다. 돈 없음 가라.','마지막 경고다. 돈이 없더냐? 그럼 나가라.','...']
+# 변수
 count = 0
 money = 5000
 usercoin = 0
 n1 = 0
 n2 = 0
 n3 = 0
+
+# 리스트
+nomoney = ['돈이 없음 썩 꺼지거라.','분명 말했다. 돈 없음 가라.','마지막 경고다. 돈이 없더냐? 그럼 나가라.','...']
+slotIcon = ['🍋','🍒','🍓','🍇','⭐️','💎','🍀','💰']
 
 # typrint
 def typrint(text, slen=float(0.25), delay=float(0.05)):
@@ -29,26 +32,26 @@ def gameOver():
     typrint(f'최종 금액: {money}원',0.5)
     typrint('☠️ 게 임 오 버 ☠️',0.25,0.15)
 
-
+# MainGame
 time.sleep(1)
 typrint('슬롯머신에 오신 것을 환영합니다.')
 typrint('[1코인 = 1000원] 입니다.')
-typrint('잭팟 - 5배')
-typrint('2개 - 1.5배')
+typrint('잭팟 - 10배')
+typrint('2개 - 2배')
 typrint('1개 - 0배')
 while True:
-    mainMenu = int(tyinput('------슬롯머신 게임------\n1. 게임시작\n2. 설정\n3. 크레딧\n4. 종료'))
-    if mainMenu = 4:
+    mainMenu = int(tyinput('------슬롯머신 게임------\n1. 게임시작\n2. 설정\n3. 제작자\n4. 종료\n'))
+    if mainMenu == 4:
         gameOver()
         break
-    if mainMenu = 3:
-        typrint('김하람')
+    if mainMenu == 3:
+        typrint('Made by Ang임사장')
         continue
-    if mainMenu = 2:#추가예정
+    if mainMenu == 2:#추가예정
         while True:
             print()
             
-    if mainMenu = 1:
+    if mainMenu == 1:
         while True:
             #슬롯머신, 은행, 돈벌기 메뉴 추가 예정
             while True:
@@ -72,16 +75,16 @@ while True:
                     money -= userbetmoney
                     typrint(f'{userbetmoney//1000}코인이 환전되었습니다.')
                     while True:
-                        slot1 = random.randint(1,8)
-                        slot2 = random.randint(1,8)
-                        slot3 = random.randint(1,8)
+                        slot1 = slotIcon[random.randint(0,7)]
+                        slot2 = slotIcon[random.randint(0,7)]
+                        slot3 = slotIcon[random.randint(0,7)]
                         #---인터페이스 추가 예정----#
                         typrint(f'{slot1} {slot2} {slot3}',0.25,0.5)
         
                         #------------------------#
                         if slot1 == slot2 == slot3:
-                            usercoin += userbetcoin * 5
-                            typrint(f'축하합니다! 잭팟입니다!\n총 {userbetcoin*5}코인을 획득하셨습니다.')
+                            usercoin += userbetcoin * 10
+                            typrint(f'축하합니다! ✨잭팟✨입니다!\n총 {userbetcoin*10}코인을 획득하셨습니다.')
                         elif slot1 == slot2 or slot2 == slot3 or slot3 == slot1:
                             usercoin += userbetcoin * 2
                             typrint(f'2개 일치! 총 {userbetcoin*2}코인을 획득하셨습니다.')
@@ -97,7 +100,7 @@ while True:
                                         typrint('코인이 부족합니다.')
                                         continue
                                     else:
-                                        money = (usercoin - userbetcoin)*1000
+                                        money += (usercoin - userbetcoin)*1000
                                         typrint(f'{usercoin - userbetcoin}코인이 {(usercoin - userbetcoin)*1000}원으로 환전되었습니다.')
                                         break
                                 break
