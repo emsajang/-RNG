@@ -43,6 +43,7 @@ def typrint(text, sleep=float(0.25), delay = None, end = None, sep = None):
         time.sleep(delay)
     print(end = end, flush=True)
     time.sleep(sleep)
+
 # tyinput
 def tyinput(prompt, delay = None):
     if delay is None:
@@ -51,7 +52,9 @@ def tyinput(prompt, delay = None):
     for char in prompt:
         print(char, end='', flush=True)
         time.sleep(delay)
+
     return input()
+
 # gameOver
 def gameOver():
     typrint(f'최종 금액: {money}원',0.5)
@@ -77,7 +80,7 @@ def onlytriDotText(text):
 #---MainGame---#
 clear()
 time.sleep(0.5)
-while True: # --시작화면--
+while True: # 시작화면
     typrint('라이프슬롯v1.3에 오신 것을 환영합니다.\n')
     mainMenu = tyinput('------로비------\n1. 게임시작\n2. 설정\n3. 제작자\n4. 종료\n')
     if mainMenu in ['4', '종료']:
@@ -151,6 +154,12 @@ while True: # --시작화면--
         clear()
         triDotText(f'고작 {money}원만 가진 채 길거리로 떠납니다')
         while True: # --메인메뉴--
+            if userCoin >= 100000:
+                goEnd = tyinput('100,000코인을 모으셨습니다.\n분수대에 던지시겠습니까? Y/N : ')
+                if goEnd in ['Y','y']:
+                    break#추가예정 어짜피 10만코인 못 모음
+                elif goEnd in ['N','n']:
+                    break#추가예정 어짜피 10만코인 못 모음
             clear()
             inGame1 = tyinput('------길거리------\n1. 임사장 카지노\n2. 돈벌기\n3. 임금은행\n4. 통계 - 만드는중\n5. 돌아가기\n')
             if inGame1 in ['5', '돌아가기']:
@@ -442,7 +451,7 @@ while True: # --시작화면--
                                 clear()
                                 # 결과 띄우기
                                 typrint(f'\n     ',sleep = 0, delay = 0, end = '')
-                                typrint(f'⟪{'⟫⟪'.join(slot)}⟫', delay = 0.5//3)
+                                typrint(f'⟪{'⟫⟪'.join(slot)}⟫', delay = 0.5//3) # 결과
                                 print(f'\n')
                                 # 결과 판단하고 돈 추가하기
                                 if slot[0] == slot[1] == slot[2]:
