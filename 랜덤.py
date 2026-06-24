@@ -245,31 +245,36 @@ while True: # --시작화면--
                         clear()
                         break
                     if makeMoney in ['2', '문제풀기']:
-                        for i in range(2):
-                            math.append(random.randint(1,20))
-                        a = math[0]
-                        b = math[1]
-                        guessNum = tyinput(f'다음 방정식의 근의 합을 A, 근의 곱을 B라고 할 때, AB 의 값은?\nx²+{a}x+{b}\n답: ')
-                        if guessNum == str(-a*b):
-                            money += 1000
-                            typrint(f'정답입니다! {money}원 +1000원')
-                        while True:
-                            retry = tyinput('다시 하시겠습니까? (Y/N) : ')
-                            if retry in ['Y', 'y']:
-                                clear()
-                                triDotText('\n 다음 문제')
-                                clear()
-                                break
-                            elif retry in ['N', 'n']:
-                                clear()
-                                triDotText('\n 돈벌기로 돌아갑니다')
-                                clear()
-                                break
-                            elif retry not in ['Y', 'y', 'N', 'n']:
-                                clear()
-                                typrint('Y or N 을(를) 입력하세요.',sleep = 1)
-                                clear()
+                        while True:    
+                            for i in range(2):
+                                math(i,random.randint(1,20))
+                            a = math[0]
+                            b = math[1]
+                            guessNum = tyinput(f'다음 방정식의 근의 합을 A, 근의 곱을 B라고 할 때, AB 의 값은?\nx²+{a}x+{b}\n답: ')
+                            if guessNum == str(-a*b):
+                                money += 1000
+                                typrint(f'정답입니다! {money}원 +1000원')
+                            while True:
+                                mathRetry = tyinput('다시 하시겠습니까? (Y/N) : ')
+                                if mathRetry in ['Y', 'y']:
+                                    clear()
+                                    triDotText('\n 다음 문제')
+                                    clear()
+                                    break
+                                elif mathRetry in ['N', 'n']:
+                                    clear()
+                                    triDotText('\n 돈벌기로 돌아갑니다')
+                                    clear()
+                                    break
+                                elif mathRetry not in ['Y', 'y', 'N', 'n']:
+                                    clear()
+                                    typrint('Y or N 을(를) 입력하세요.',sleep = 1)
+                                    clear()
+                                    continue
+                            if mathRetry in ['Y','y']:
                                 continue
+                            elif mathRetry in ['N','n']:
+                                break
                         clear()
                     if makeMoney in ['1', '동전 뒤집기']:
                         clear()
@@ -362,12 +367,13 @@ while True: # --시작화면--
                                     retry = tyinput('다시 돌리시겠습니까? (Y/N) : ')
                                     if retry in ['Y', 'y'] and usercoin > 0:
                                         while True:
+                                            if usercoin <= 0:
+                                                typrint('코인이 부족합니다.')
+                                                break
                                             userbetcoin = int(tyinput(f'\n현재 코인: {usercoin}\n베팅할 코인을 입력해주세요.'))
                                             if userbetcoin > usercoin:
                                                 typrint('코인이 부족합니다.')
                                                 continue
-                                            elif userbetcoin != usercoin:
-                                                break
                                         break
                                     elif retry in ['N', 'n']:
                                         while True:
@@ -398,6 +404,7 @@ while True: # --시작화면--
                                         continue
                                 break
                             break
-                continue
+                    break
+            continue
 
 typrint(f'\n게임 오버~ {money}원 남았다~')
