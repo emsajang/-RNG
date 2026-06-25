@@ -4,6 +4,8 @@ import time
 import os
 
 # 변수
+retry = ''
+reretry = ''
 loanLimit = 100000
 bankBalance = 100000000
 bankCoin = 100000
@@ -12,6 +14,7 @@ speed = 0.05
 totLoan = 0
 count = 0
 userCoin = 0
+goSlot = 0
 fxa = 0
 fxb = 0
 n1 = 0
@@ -389,7 +392,7 @@ while True: # 시작화면
                                 time.sleep(0.05)
                                 clear()
                                 typrint(f'\n     {앞뒤[앞뒷.index(ansFlipcoin)]}\n', delay = 0)
-                            elif gueFlipcoin == f'{앞뒤[앞뒷.index(ansFlipcoin)]}':
+                            if gueFlipcoin == f'{앞뒤[앞뒷.index(ansFlipcoin)]}':
                                 money += 500
                                 typrint(f'{앞뒷[앞뒷.index(ansFlipcoin)]}면 정답입니다! {money-500}원 +500원')
                             else:
@@ -430,6 +433,7 @@ while True: # 시작화면
                                 clear()
                                 typrint('얼른 나가지 못할까!!')
                                 onlytriDotText('길거리로 내쫓겼다')
+                                count = 0
                                 clear()
                                 break
                             typrint(nomoney[count])
@@ -464,60 +468,57 @@ while True: # 시작화면
                                     userCoin = 0
                                     typrint(f'0개 일치! {userbetcoin+userCoin}코인을 잃으셨습니다.')
                                 while True:
-                                    retry = tyinput('다시 돌리시겠습니까? (Y/N) : ')
-                                    if retry in ['Y', 'y'] and userCoin > 0:
-                                        while True:
-                                            if userCoin <= 0:
-                                                typrint('코인이 부족합니다.')
-                                                userbetcoin = 0
-                                                break
-                                            userbetcoin = int(tyinput(f'\n현재 코인: {userCoin}\n베팅할 코인을 입력해주세요.'))
-                                            if userbetcoin > userCoin:
-                                                typrint('코인이 부족합니다.')
-                                                continue
-                                            elif userbetcoin <= userCoin:
-                                                break
-                                        break
-                                    elif retry in ['N', 'n']:
-                                        while True:
-                                            clear()
-                                            reretry = tyinput('정말 그만두시겠습니까? (Y/N) : ')
-                                            if userCoin <= 0:
-                                                userbetcoin = 0
+                                    if userCoin > 0:
+                                        retry = tyinput('다시 돌리시겠습니까? (Y/N) : ')
+                                        if retry in ['Y', 'y']:
+                                            while True:
+                                                userbetcoin = int(tyinput(f'\n현재 코인: {userCoin}\n베팅할 코인을 입력해주세요.'))
+                                                if userbetcoin > userCoin:
+                                                    typrint('코인이 부족합니다.')
+                                                    continue
+                                                elif userbetcoin <= userCoin:
+                                                    goSlot = 1
+                                                    break
+                                            break
+                                        elif retry in ['N', 'n']:
+                                            while True:
+                                                clear()
+                                                reretry = tyinput('정말 그만두시겠습니까? (Y/N) : ')
+                                                if userCoin <= 0:
+                                                    userbetcoin = 0
+                                                if reretry in ['Y', 'y']:
+                                                    clear()
+                                                    triDotText('임사장 카지노로 돌아갑니다')
+                                                    clear()
+                                                    break
+                                                elif reretry in ['N', 'n']:
+                                                    break
+                                                elif reretry not in ['Y', 'y', 'N', 'n']:
+                                                    typrint('Y or N 을(를) 입력하세요.')
+                                                    continue
                                             if reretry in ['Y', 'y']:
-                                                clear()
-                                                triDotText('임사장 카지노로 돌아갑니다')
-                                                clear()
                                                 break
                                             elif reretry in ['N', 'n']:
-                                                break
-                                            elif reretry not in ['Y', 'y', 'N', 'n']:
-                                                typrint('Y or N 을(를) 입력하세요.')
                                                 continue
-                                        if reretry in ['Y', 'y']:
+                                        elif userCoin <= 0:
+                                            typrint('코인이 부족합니다. 임금은행에서 대출을 받거나 돈벌기를 이용해 주세요.')
+                                            clear()
+                                            triDotText('길거리로 돌아갑니다')
+                                            clear()
                                             break
-                                        elif reretry in ['N', 'n']:
+                                        elif retry not in ['Y', 'y', 'N', 'n']:
+                                            typrint('Y or N 을(를) 입력하세요.')
                                             continue
-                                    elif userCoin <= 0:
-                                        typrint('코인이 부족합니다. 임금은행에서 대출을 받거나 돈벌기를 이용해 주세요.')
-                                        clear()
-                                        triDotText('길거리로 돌아갑니다')
-                                        clear()
+                                    else:
                                         break
-                                    elif retry not in ['Y', 'y', 'N', 'n']:
-                                        typrint('Y or N 을(를) 입력하세요.')
-                                        continue
-                                if reretry in ['Y','y']:
-                                    break
-                                elif reretry in ['N','n']:
+                                if retry in ['N','n'] or reretry in ['N','n']:
                                     continue
-                                break
-                            if userbetcoin <= 0 or (retry in ['N', 'n'] and reretry in ['N', 'n']):
-                                break
-                            else:
+                                else:    
+                                    break
+                            if goSlot == 1:
+                                goSlot = 0
                                 continue
-                            
-                    break
-            continue
+                            elif userCoin <= 0 or userbetcoin <= 0 or (retry in ['N', 'n'] and reretry in ['Y', 'y']):
+                                break
 
 typrint(f'\n게임 오버~ {money}원 남았다~')
